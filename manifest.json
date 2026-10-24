@@ -3,6 +3,7 @@
   "name": "mailbox.org email colours",
   "version": "1.0.0",
   "description": "Lets Chrome's auto dark mode darken whole mailbox.org emails, or keeps them light",
+  "update_url": "https://someonewithpc.github.io/mailbox-dark-emails/updates.xml",
   "permissions": ["storage"],
   "action": {
     "default_title": "mailbox.org email colours",

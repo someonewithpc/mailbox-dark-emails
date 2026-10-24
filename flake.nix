@@ -14,7 +14,8 @@
       {
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
-            zip
+            openssl
+            python3
           ];
         };
       }

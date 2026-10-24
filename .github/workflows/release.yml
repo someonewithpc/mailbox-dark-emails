@@ -1,0 +1,42 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check the tag matches the manifest version
+        run: test "v$(jq -r .version manifest.json)" = "$GITHUB_REF_NAME"
+
+      - name: Pack
+        env:
+          CRX_KEY: ${{ secrets.CRX_KEY }}
+        run: |
+          umask 077
+          printf '%s\n' "$CRX_KEY" > "$RUNNER_TEMP/key.pem"
+          python3 scripts/pack.py "$RUNNER_TEMP/key.pem" site "https://someonewithpc.github.io/mailbox-dark-emails"
+          rm "$RUNNER_TEMP/key.pem"
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - id: deploy
+        uses: actions/deploy-pages@v4

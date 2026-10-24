@@ -27,6 +27,31 @@ write.
 
 ## Install
 
-1. Open `chrome://extensions` and turn on Developer mode
-2. Click "Load unpacked" and pick this directory
-3. Reload app.mailbox.org
+Chrome on Linux installs it from a managed policy. Put this in
+`/etc/opt/chrome/policies/managed/mailbox-dark-emails.json` (for Chromium,
+`/etc/chromium/policies/managed/`):
+
+```json
+{
+  "ExtensionInstallForcelist": [
+    "ccgjbgfofdpngcfncgfeajfpohndfhim;https://someonewithpc.github.io/mailbox-dark-emails/updates.xml"
+  ]
+}
+```
+
+Restart Chrome and it installs the extension, then picks up new releases from
+the same URL by itself. Chrome on Windows and macOS only accepts this from
+machines in a managed domain.
+
+To work on it, load it unpacked instead. Open `chrome://extensions`, turn on
+Developer mode, click "Load unpacked" and pick this directory. Remove the
+policy first, or Chrome will show both copies.
+
+## Releasing
+
+Bump `version` in `manifest.json`, commit, and push a matching `v<version>`
+tag. The release workflow signs the extension with the key in the `CRX_KEY`
+secret and publishes the `.crx` and `updates.xml` to GitHub Pages. The key
+fixes the extension ID, so a new key means a new extension.
+
+`scripts/pack.py <key.pem> <out-dir> <base-url>` does the same packing locally.
