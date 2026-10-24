@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <style>
+    :root {
+      color-scheme: light dark;
+      font: 0.875rem/1.375 system-ui, sans-serif;
+    }
+
+    body {
+      width: 16rem;
+      margin: 0;
+      padding: 0.75rem 1rem;
+    }
+
+    label {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 0.5rem 0 0;
+      opacity: 0.75;
+    }
+  </style>
+</head>
+<body>
+  <label><input type="checkbox" id="dark"> Show emails dark</label>
+  <p>On, Chrome's auto dark mode darkens the whole email. Off, emails keep their own light colours. Takes effect on the next email you open.</p>
+  <script src="popup.js"></script>
+</body>
+</html>

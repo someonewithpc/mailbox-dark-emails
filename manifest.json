@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "mailbox.org email colours",
+  "version": "1.0.0",
+  "description": "Lets Chrome's auto dark mode darken whole mailbox.org emails, or keeps them light",
+  "permissions": ["storage"],
+  "action": {
+    "default_title": "mailbox.org email colours",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://app.mailbox.org/*", "https://office.mailbox.org/*"],
+      "css": ["mail.css"],
+      "js": ["content.js"],
+      "all_frames": true,
+      "match_about_blank": true,
+      "match_origin_as_fallback": true,
+      "run_at": "document_start"
+    }
+  ]
+}

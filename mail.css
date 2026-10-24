@@ -1,0 +1,28 @@
+/* Injected into the app and into every same-origin frame, so each rule is
+   scoped to the app (html.dark), an email (.mail-detail-content) or the compose
+   editor (.mce-content-body) */
+
+/* Chrome's auto dark mode skips a frame that declares a dark colour scheme,
+   which OX does for plain-text emails, and doesn't darken the bare canvas of a
+   light frame inside a dark page. Through that canvas shows whatever is behind
+   the iframe, white in both cases, while auto dark mode turns the default text
+   white. A light scheme and an explicit white root give it the whole frame */
+:root:has(.mail-detail-content, .mce-content-body) {
+  color-scheme: light !important;
+  background: #fff;
+}
+
+/* "only" opts the frame out of auto dark mode, so it keeps its own colours */
+:root.mbx-light:has(.mail-detail-content, .mce-content-body) {
+  color-scheme: only light !important;
+}
+
+/* OX paints a white panel behind the email that auto dark mode never reaches */
+html.dark:not(.mbx-light) .mail-detail section.body {
+  background: transparent !important;
+}
+
+/* OX gives plain-text links the dark theme's light grey */
+.mail-detail-content.simple-mail a[href] {
+  color: var(--indigo-600) !important;
+}
